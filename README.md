@@ -11,7 +11,9 @@ Pipeline for deployment of this application based on Elastic Beanstalk Multi-Doc
 
 Pipeline for deployment of this application with Travis-CI to Elastic Beanstalk Multi-Docker environment you can find [here](https://github.com/kkkooosss/React-app-for-multi-docker-CI-CD-deployment-to-elasticbeanstalk-aws-with-travis).
 
-**Services** required for applying of this pipeline:
+[Here](https://bitbucket.org/ConstConst/react-app-for-multi-docker-ci-cd-deployment-to/src/master/) you can find the pipeline of this application on Bitbacket git platform.
+
+**Services** required for applying of this version of pipeline:
 - User whith programmatic access to AWS,
 - Cluster in ECS with adjusted service for deploy task definition,
 - Task-definition,
