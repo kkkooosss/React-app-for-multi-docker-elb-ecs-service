@@ -9,7 +9,7 @@ jobs:
   deployment:
     name: Deploy New version of App to ECS 
     runs-on: ubuntu-latest
-    needs: [build_test_push] 
+    needs:
     steps:
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
