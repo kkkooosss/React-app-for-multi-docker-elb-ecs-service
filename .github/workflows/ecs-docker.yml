@@ -21,7 +21,4 @@ jobs:
       - name: render-task-definition and update service
         run: |
           aws ecs register-task-definition --family multi-docker-task-definition --cli-input-json file://task-definition.json
-          export REVISION_NUM="$(aws ecs describe-task-definition --task-definition  multi-docker-task-definition | grep revision | awk '{ print $2 }' | sed 's/.$//')"         
-          echo $REVISION_NUM
-          aws ecs update-service --cluster multi-docker --service multi-docker-service --task-definition multi-docker-task-definition:$REVISION_NUM
-          
+          aws ecs update-service --cluster multi-docker --service multi-docker-service --task-definition multi-docker-task-definition:latest
