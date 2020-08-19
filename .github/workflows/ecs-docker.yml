@@ -6,32 +6,6 @@ on:
 name: Deploy to Amazon ECS 
 
 jobs:
- # build_test_push:    
- #   name: Test&build and push new images to Dockerhub
- #   runs-on: ubuntu-latest
- #   steps:
- #     - name: Git clone our REPO
- #       uses: actions/checkout@v2
- #    - name: Test phase 
- #       run: |
- #           docker build -t kosdockerid/react-test -f ./client/Dockerfile.dev ./client
- #           docker run kosdockerid/react-test npm test -- --coverage
- #     - name: Build phase  
- #       run: |    
- #          docker build -t kosdockerid/multi-client ./client
- #          docker build -t kosdockerid/multi-nginx ./nginx
- #          docker build -t kosdockerid/multi-server ./server
- #          docker build -t kosdockerid/multi-worker ./worker
- #     - name: Login to Dockerhub 
- #       run: echo ${{ secrets.DOCKER_PASSWORD}} | docker login -u ${{ secrets.DOCKER_ID}} --password-stdin
- #     - name: Push images to Dockerhub 
- #       run: | 
- #          docker push kosdockerid/multi-client
- #          docker push kosdockerid/multi-nginx
- #          docker push kosdockerid/multi-server
- #          docker push kosdockerid/multi-worker
- #     
- #      
   deployment:
     name: Deploy New version of App to ECS 
     runs-on: ubuntu-latest
