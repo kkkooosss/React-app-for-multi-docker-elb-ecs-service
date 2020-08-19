@@ -31,11 +31,5 @@ Also, following **secrets** should be added to repositories settings required fo
   - POSTGRES_USER
   - POSTGRES_PASSWORD  
 
-## preview
-![Preview](https://github.com/kkkooosss/React-app-for-multi-docker-CI-CD-deployment-to-ecs/blob/master/images/Fibonacci_calculator.png)
-
-## diagram
-![Diagram](https://github.com/kkkooosss/React-app-for-multi-docker-CI-CD-deployment-to-ecs/blob/master/images/AWS%20Multi-container%20Docker%20Application.png)
-
 
 
