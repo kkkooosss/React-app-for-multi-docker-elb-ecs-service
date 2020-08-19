@@ -1,0 +1,119 @@
+{
+  "family": "multi-docker-task-definition",
+  "executionRoleArn": "arn:aws:iam::092663235681:role/ecs-devops-sandbox-execution-role",
+  "networkMode": "bridge",
+  "placementConstraints": [],
+  "requiresCompatibilities": [
+        "EC2"
+    ],
+  "containerDefinitions": [
+    {
+      "name": "client",
+      "image": "kosdockerid/multi-client",
+      "memory": 128,
+      "hostname": "client",
+      "portMappings": [],
+      "essential": false
+    },
+    {
+      "name": "server",
+      "image": "kosdockerid/multi-server",
+      "memory": 128,
+      "hostname": "api",
+      "portMappings": [],
+      "essential": false,
+      "environment": [
+        {
+          "name": "PGDATABASE",
+          "value": "multi-docker"
+        },
+        {
+          "name": "PGHOST",
+          "value": "multi-docker.crrqphzb15jt.eu-central-1.rds.amazonaws.com"
+        },
+        {
+          "name": "PGPASSWORD",
+          "value": "hardsuperpass-word"
+        },
+        {
+          "name": "PGPORT",
+          "value": "5432"
+        },
+        {
+          "name": "PGUSER",
+          "value": "postgres"
+        },
+        {
+          "name": "REDIS_HOST",
+          "value": "multi-docker-redis.jvhclb.ng.0001.euc1.cache.amazonaws.com"
+        },
+        {
+          "name": "REDIS_PORT",
+          "value": "6379"
+        }
+      ]
+    },
+    {
+      "name": "worker",
+      "image": "kosdockerid/multi-worker",
+      "memory": 128,
+      "hostname": "worker",
+      "portMappings": [],
+      "essential": false,
+      "environment": [
+        {
+          "name": "REDIS_HOST",
+          "value": "multi-docker-redis.jvhclb.ng.0001.euc1.cache.amazonaws.com"
+        },
+        {
+          "name": "REDIS_PORT",
+          "value": "6379"
+        }
+      ]
+    },
+    {
+      "name": "nginx",
+      "image": "kosdockerid/multi-nginx",
+      "memory": 128,
+      "hostname": "nginx",
+      "essential": true, 
+      "links": [
+        "client",
+        "server"
+      ],
+      "portMappings": [
+        {
+          "hostPort": 80,
+          "protocol": "tcp",
+          "containerPort": 80
+        }
+      ]
+    } 
+  ],    
+  "volumes": [
+    {
+      "name": "awseb-logs-client",
+      "host": {
+        "sourcePath": "/var/log/containers/client"
+      }
+    },
+    {
+      "name": "awseb-logs-server",
+      "host": {
+        "sourcePath": "/var/log/containers/server"
+      }
+    },
+    {
+      "name": "awseb-logs-worker",
+      "host": {
+        "sourcePath": "/var/log/containers/worker"
+      }
+    },
+    {
+      "name": "awseb-logs-nginx",
+      "host": {
+        "sourcePath": "/var/log/containers/nginx"
+      }
+    }
+  ]
+}

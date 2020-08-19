@@ -3,60 +3,35 @@ on:
     branches:
       - master
 
-name: Deploy to Amazon ECS with ecs-cli & Elastic Beanstalk
-env:
-  EB_PACKEGE_S3_BUCKET_NAME: "elasticbeanstalk-eu-central-1-092663235681"
-  EB_APP_NAME              : "multi-docker"
-  EB_ENV_NAME              : "MultiDocker-env"
-  DEPLOY_PACKAGE_NAME      : "MultiDocker-env-${{ github.sha }}.zip"
+name: Deploy to Amazon ECS 
 
 jobs:
-  build_test_push:    
-    name: Test&build and push new images to Dockerhub
-    runs-on: ubuntu-latest
-    steps:
-      - name: Git clone our REPO
-        uses: actions/checkout@v2
-      #- name: Test phase 
-        #run: |
-           #docker build -t kosdockerid/react-test -f ./client/Dockerfile.dev ./client
-           #docker run kosdockerid/react-test npm test -- --coverage
-      - name: Build phase  
-        run: |    
-           docker build -t kosdockerid/multi-client ./client
-           docker build -t kosdockerid/multi-nginx ./nginx
-           docker build -t kosdockerid/multi-server ./server
-           docker build -t kosdockerid/multi-worker ./worker
-      - name: Login to Dockerhub 
-        run: echo ${{ secrets.DOCKER_PASSWORD}} | docker login -u ${{ secrets.DOCKER_ID}} --password-stdin
-      - name: Push images to Dockerhub 
-        run: | 
-           docker push kosdockerid/multi-client
-           docker push kosdockerid/multi-nginx
-           docker push kosdockerid/multi-server
-           docker push kosdockerid/multi-worker
-      
-      - name: DB Credentials
-        run: |
-          sed -i "s/POSTGRES_USER/${{ secrets.POSTGRES_USER }}/g" Dockerrun.aws.json
-          sed -i "s/POSTGRES_PASSWORD/${{ secrets.POSTGRES_PASSWORD }}/g" Dockerrun.aws.json
-      
-      - name: Create ZIP packege from REPO
-        run : zip -r ${{ env.DEPLOY_PACKAGE_NAME}} ./ -x *.git*
-               
-      - name: Configure my AWS 
-        uses: aws-actions/configure-aws-credentials@v1
-        with:
-          aws-access-key-id    : ${{ secrets.ACCESS_KEY_ID}}
-          aws-secret-access-key: ${{ secrets.SECRET_ACCESS_KEY}}
-          aws-region           : ${{ secrets.AWS_REGION }}      
-       
-      - name: Copy ZIP packege to S3
-        run : aws s3 cp ${{ env.DEPLOY_PACKAGE_NAME}}  s3://${{ env.EB_PACKEGE_S3_BUCKET_NAME }}/multi-docker/   
-        
-      - name: Print success msg
-        run: echo "Zip-package copied successfully"      
-      
+ # build_test_push:    
+ #   name: Test&build and push new images to Dockerhub
+ #   runs-on: ubuntu-latest
+ #   steps:
+ #     - name: Git clone our REPO
+ #       uses: actions/checkout@v2
+ #    - name: Test phase 
+ #       run: |
+ #           docker build -t kosdockerid/react-test -f ./client/Dockerfile.dev ./client
+ #           docker run kosdockerid/react-test npm test -- --coverage
+ #     - name: Build phase  
+ #       run: |    
+ #          docker build -t kosdockerid/multi-client ./client
+ #          docker build -t kosdockerid/multi-nginx ./nginx
+ #          docker build -t kosdockerid/multi-server ./server
+ #          docker build -t kosdockerid/multi-worker ./worker
+ #     - name: Login to Dockerhub 
+ #       run: echo ${{ secrets.DOCKER_PASSWORD}} | docker login -u ${{ secrets.DOCKER_ID}} --password-stdin
+ #     - name: Push images to Dockerhub 
+ #       run: | 
+ #          docker push kosdockerid/multi-client
+ #          docker push kosdockerid/multi-nginx
+ #          docker push kosdockerid/multi-server
+ #          docker push kosdockerid/multi-worker
+ #     
+ #      
   deployment:
     name: Deploy New version of App to ECS 
     runs-on: ubuntu-latest
@@ -68,17 +43,46 @@ jobs:
           aws-access-key-id: ${{ secrets.ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.SECRET_ACCESS_KEY }}
           aws-region: ${{ secrets.AWS_REGION }}
-      - name: Create new EB_version of my Website
-        run : |
-          aws elasticbeanstalk create-application-version \
-          --application-name ${{ env.EB_APP_NAME }} \
-          --source-bundle S3Bucket=${{ env.EB_PACKEGE_S3_BUCKET_NAME }},S3Key="multi-docker/${{ env.DEPLOY_PACKAGE_NAME }}" \
-          --version-label "Ver-${{ github.sha }}" \
-          --description "CommitSHA-${{ github.sha }}"
-        
-      - name: Deploy new EB version of application 
-        run: aws elasticbeanstalk update-environment --environment-name ${{ env.EB_ENV_NAME }} --version-label "Ver-${{ github.sha }}"           
-        
-      - name: Print success CD msg
-        run: echo "Deployment is done successfully" 
-      
+      - name: Fill in the new image ID in the Amazon ECS task definition
+        id: task-def
+        uses: aws-actions/amazon-ecs-render-task-definition@v1
+        with:
+          task-definition: task-definition.json
+      - name: Render Amazon ECS task definition for first container
+        id: task-def
+        uses: aws-actions/amazon-ecs-render-task-definition@v1
+        with:
+          task-definition: task-definition.json
+          container-name: client
+          image: kosdockerid/multi-client
+      - name: Render Amazon ECS task definition for second container
+        id: task-def
+        uses: aws-actions/amazon-ecs-render-task-definition@v1
+        with:
+          task-definition: task-definition.json
+          container-name: server
+          image: kosdockerid/multi-server
+      - name: Render Amazon ECS task definition for third container
+        id: task-def
+        uses: aws-actions/amazon-ecs-render-task-definition@v1
+        with:
+          task-definition: task-definition.json
+          container-name: worker
+          image: kosdockerid/multi-worker
+      - name: Render Amazon ECS task definition for fourth container
+        id: task-def
+        uses: aws-actions/amazon-ecs-render-task-definition@v1
+        with:
+          task-definition: task-definition.json
+          container-name: nginx
+          image: kosdockerid/multi-nginx
+
+      - name: Deploy Amazon ECS task definition
+        uses: aws-actions/amazon-ecs-deploy-task-definition@v1
+        with:
+          task-definition: ${{ steps.task-def.outputs.task-definition }}
+          service: multi-docker-service
+          cluster: multi-docker 
+          wait-for-service-stability: true
+
+© 2020 GitHub, Inc.
