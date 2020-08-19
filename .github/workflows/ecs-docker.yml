@@ -18,39 +18,9 @@ jobs:
           aws-access-key-id: ${{ secrets.ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.SECRET_ACCESS_KEY }}
           aws-region: ${{ secrets.AWS_REGION }}
-      - name: Render Amazon ECS task definition for first container
-        id: render-client-container
-        uses: aws-actions/amazon-ecs-render-task-definition@v1
-        with:
-          task-definition: task-definition.json
-          container-name: client
-          image: kosdockerid/multi-client
-      - name: Render Amazon ECS task definition for second container
-        id: render-server-container
-        uses: aws-actions/amazon-ecs-render-task-definition@v1
-        with:
-          task-definition: ${{ steps.render-client-container.outputs.task-definition }}
-          container-name: server
-          image: kosdockerid/multi-server
-      - name: Render Amazon ECS task definition for third container
-        id: render-worker-container
-        uses: aws-actions/amazon-ecs-render-task-definition@v1
-        with:
-          task-definition: ${{ steps.render-server-container.outputs.task-definition }}
-          container-name: worker
-          image: kosdockerid/multi-worker
-      - name: Render Amazon ECS task definition for fourth container
-        id: nginx
-        uses: aws-actions/amazon-ecs-render-task-definition@v1
-        with:
-          task-definition: ${{ steps.render-worker-container.outputs.task-definition }}
-          container-name: nginx
-          image: kosdockerid/multi-nginx
-
-      - name: Deploy Amazon ECS task definition
-        uses: aws-actions/amazon-ecs-deploy-task-definition@v1
-        with:
-          task-definition: ${{ steps.task-def.outputs.task-definition }}
-          service: multi-docker-service
-          cluster: multi-docker 
-          wait-for-service-stability: true
+      - name: render-task-definition and update service
+        run: |
+          aws ecs register-task-definition --family multi-docker-task-definition --cli-input-json file://task-definition.json
+          export REVISION_NUM="$(aws ecs describe-task-definition --task-definition  multi-docker-task-definition | grep revision | awk '{ print $2 }' | sed 's/.$//')"         
+          aws ecs update-service --cluster my-alb-ec2-cluster --service elb-auto-scale-service --task-definition elb-autoscalle-task-definition:$REVISION_NUM
+          
