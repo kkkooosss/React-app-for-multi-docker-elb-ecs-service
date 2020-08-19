@@ -3,6 +3,7 @@
 # **React-app-for-multi-docker-elb-ecs-service-capacity_provider**
 
 This CI/CD pipeline uses GitHub Actions which makes a deploymeny of new revision of sample multi container Docker aplication with external database based on RDS Postgres and Elasticash for Redis as well. 
+Test, Build & Push phases were removed from pipeline. You can find them in other versions of the pipelines below.
 
 Source code of this application was taken [here](https://github.com/StephenGrider/multi-docker). [Preview](#preview) and [Diagram](#diagram) of application.
 
