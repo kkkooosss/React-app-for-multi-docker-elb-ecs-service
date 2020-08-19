@@ -4,7 +4,6 @@ on:
       - master
 
 name: Deploy to Amazon ECS 
-
 jobs:
   deployment:
     name: Deploy New version of App to ECS 
@@ -16,37 +15,32 @@ jobs:
           aws-access-key-id: ${{ secrets.ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.SECRET_ACCESS_KEY }}
           aws-region: ${{ secrets.AWS_REGION }}
-      - name: Fill in the new image ID in the Amazon ECS task definition
-        id: task-def
-        uses: aws-actions/amazon-ecs-render-task-definition@v1
-        with:
-          task-definition: task-definition.json
       - name: Render Amazon ECS task definition for first container
-        id: task-def
+        id: render-client-container
         uses: aws-actions/amazon-ecs-render-task-definition@v1
         with:
           task-definition: task-definition.json
           container-name: client
           image: kosdockerid/multi-client
       - name: Render Amazon ECS task definition for second container
-        id: task-def
+        id: render-server-container
         uses: aws-actions/amazon-ecs-render-task-definition@v1
         with:
-          task-definition: task-definition.json
+          task-definition: ${{ steps.render-client-container.outputs.task-definition }}
           container-name: server
           image: kosdockerid/multi-server
       - name: Render Amazon ECS task definition for third container
-        id: task-def
+        id: render-worker-container
         uses: aws-actions/amazon-ecs-render-task-definition@v1
         with:
-          task-definition: task-definition.json
+          task-definition: ${{ steps.render-server-container.outputs.task-definition }}
           container-name: worker
           image: kosdockerid/multi-worker
       - name: Render Amazon ECS task definition for fourth container
-        id: task-def
+        id: nginx
         uses: aws-actions/amazon-ecs-render-task-definition@v1
         with:
-          task-definition: task-definition.json
+          task-definition: ${{ steps.render-worker-container.outputs.task-definition }}
           container-name: nginx
           image: kosdockerid/multi-nginx
 
@@ -57,5 +51,3 @@ jobs:
           service: multi-docker-service
           cluster: multi-docker 
           wait-for-service-stability: true
-
-© 2020 GitHub, Inc.
