@@ -21,4 +21,4 @@ jobs:
       - name: render-task-definition and update service
         run: |
           aws ecs register-task-definition --family multi-docker-task-definition --cli-input-json file://task-definition.json
-          aws ecs update-service --cluster multi-docker --service multi-docker-service --task-definition multi-docker-task-definition:latest
+          aws ecs update-service --cluster multi-docker --service multi-docker-service --task-definition multi-docker-task-definition
