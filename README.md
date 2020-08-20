@@ -1,12 +1,16 @@
-![Deploy to Amazon ECS](https://github.com/kkkooosss/React-app-for-multi-docker-elb-ecs-service-capacity_provider/workflows/Deploy%20to%20Amazon%20ECS/badge.svg))
+![Deploy to Amazon ECS](https://github.com/kkkooosss/React-app-for-multi-docker-elb-ecs-service-capacity_provider/workflows/Deploy%20to%20Amazon%20ECS/badge.svg)
+
 
 # **Variations of CI/CD pipeline for multi docker container React App**
 
 [React App Fibonacci calculator developed by Stephen Grider](https://github.com/StephenGrider/multi-docker)
 
 For detailes please have a look at 
+
+## Application preview
 ![Application preview](https://github.com/kkkooosss/React-app-for-multi-docker-CI-CD-deployment-to-ecs/blob/master/images/Fibonacci_calculator.png)
- 
+
+## Arcitecture diagram 
 ![Arcitecture diagram](https://github.com/kkkooosss/React-app-for-multi-docker-CI-CD-deployment-to-ecs/blob/master/images/AWS%20Multi-container%20Docker%20Application.png)
 
 Aforementioned React App utilazes external RDS Postgres and ElastiCash for Redis.
@@ -23,17 +27,17 @@ Aforementioned React App utilazes external RDS Postgres and ElastiCash for Redis
 _*Please note that you could be charged for usage of those services._
 
 Also, following **secrets** should be added to GitHub repositorie settings:
-- for AWS configure:
+- for AWS configure
   - ACCESS_KEY_ID
   - SECRET_ACCESS_KEY
   - AWS_REGION
-- for Dockerhub login:
+- for Dockerhub login
   - DOCKER_ID
   - DOCKER_PASSWORD
 
 This CI/CD pipeline uses GitHub Actions to create a new revision of the task-definition and subsiquently updates a corresponding service inside ECS cluster via AWS CLI.
 
-_Note! Test, Build & Push phases were removed from this version of the pipeline. One can obtane them_ [here](https://github.com/kkkooosss/React-app-for-multi-docker-CI-CD-deployment-to-ecs).
+_Note! Test, Build & Push phases were removed from this version of the pipeline. Look at them in **Variation 2**._ 
 
 ## Variation 2
 
@@ -49,11 +53,11 @@ _Note! Test, Build & Push phases were removed from this version of the pipeline.
 _*Please note that you could be charged for usage of those services._
 
 Also, following **secrets** should be added to GitHub repositorie settings:
-- for AWS configure:
+- for AWS configure
   - ACCESS_KEY_ID
   - SECRET_ACCESS_KEY
   - AWS_REGION
-- for Dockerhub login:
+- for Dockerhub login
   - DOCKER_ID
   - DOCKER_PASSWORD
 - Postgres DB credentials
