@@ -1,40 +1,69 @@
-![Deploy to Amazon ECS with ecs-cli & Elastic Beanstalk](https://github.com/kkkooosss/React-app-for-multi-docker-CI-CD-deployment-to-ecs/workflows/Deploy%20to%20Amazon%20ECS%20with%20ecs-cli%20&%20Elastic%20Beanstalk/badge.svg)
+![Deploy to Amazon ECS](https://github.com/kkkooosss/React-app-for-multi-docker-elb-ecs-service-capacity_provider/workflows/Deploy%20to%20Amazon%20ECS/badge.svg))
 
-# **React-app-for-multi-docker-elb-ecs-service-capacity_provider**
+# **Variations of CI/CD pipeline for multi docker container React App**
 
-This CI/CD pipeline uses GitHub Actions which makes a deploymeny of new revision of sample multi container Docker aplication with external database based on RDS Postgres and Elasticash for Redis as well. 
-Test, Build & Push phases were removed from pipeline. You can find them in other versions of the pipelines below.
+[React App Fibonacci calculator developed by Stephen Grider](https://github.com/StephenGrider/multi-docker)
 
-Source code of this application was taken [here](https://github.com/StephenGrider/multi-docker). [Preview](#preview) and [Diagram](#diagram) of application.
+For detailes please have a look at 
+![Application preview](https://github.com/kkkooosss/React-app-for-multi-docker-CI-CD-deployment-to-ecs/blob/master/images/Fibonacci_calculator.png)
+ 
+![Arcitecture diagram](https://github.com/kkkooosss/React-app-for-multi-docker-CI-CD-deployment-to-ecs/blob/master/images/AWS%20Multi-container%20Docker%20Application.png)
 
-Pipeline for deployment of this application based on Elastic Beanstalk Multi-Docker environment you can find [here](https://github.com/kkkooosss/React-app-for-multi-docker-CI-CD-deployment-to-ecs).
+Aforementioned React App utilazes external RDS Postgres and ElastiCash for Redis.
 
-Pipeline for deployment of this application with Travis-CI to Elastic Beanstalk Multi-Docker environment you can find [here](https://github.com/kkkooosss/React-app-for-multi-docker-CI-CD-deployment-to-elasticbeanstalk-aws-with-travis).
+## Variation 1
 
-[Here](https://bitbucket.org/ConstConst/react-app-for-multi-docker-ci-cd-deployment-to/src/master/) you can find the pipeline of this application on Bitbacket git platform.
+**Prerequisites** 
 
-**Services** required for applying of this version of pipeline:
-- User whith programmatic access to AWS,
-- Cluster in ECS with adjusted service for deploy task definition,
-- Task-definition,
-- Dockerhub account for images,
-- RDS Postgres DB 
-- ElastiCash for Redis.
+- User whith programmatic access to AWS.
+- Existing AWS ECS Cluster with corresponding service and initialed task-definition.
+- Running AWS RDS Postgres inastance.
+- Running AWS ElastiCash for Redis.
 
-__*Please note that you could be charged for use of those services.__
+_*Please note that you could be charged for usage of those services._
 
-Also, following **secrets** should be added to repositories settings required for workfow:
+Also, following **secrets** should be added to GitHub repositorie settings:
 - for AWS configure:
-  - aws-access-key-id
-  - aws-secret-access-key
-  - aws-region
+  - ACCESS_KEY_ID
+  - SECRET_ACCESS_KEY
+  - AWS_REGION
 - for Dockerhub login:
   - DOCKER_ID
   - DOCKER_PASSWORD
-  
-  ## preview
-![Preview](https://github.com/kkkooosss/React-app-for-multi-docker-CI-CD-deployment-to-ecs/blob/master/images/Fibonacci_calculator.png)
 
-## diagram
-![Diagram](https://github.com/kkkooosss/React-app-for-multi-docker-CI-CD-deployment-to-ecs/blob/master/images/AWS%20Multi-container%20Docker%20Application.png)
+This CI/CD pipeline uses GitHub Actions to create a new revision of the task-definition and subsiquently updates a corresponding service inside ECS cluster via AWS CLI.
 
+_Note! Test, Build & Push phases were removed from this version of the pipeline. One can obtane them_ [here](https://github.com/kkkooosss/React-app-for-multi-docker-CI-CD-deployment-to-ecs).
+
+## Variation 2
+
+**Prerequisites** 
+
+- User whith programmatic access to AWS.
+- Elastic Beanstalk with created Application and Environment for Multi container Docker App.
+- S3 for keeping zip files for Elastic Beanstalk.
+- Dockerhub account for images.
+- Running AWS RDS Postgres inastance.
+- Running AWS ElastiCash for Redis.
+
+_*Please note that you could be charged for usage of those services._
+
+Also, following **secrets** should be added to GitHub repositorie settings:
+- for AWS configure:
+  - ACCESS_KEY_ID
+  - SECRET_ACCESS_KEY
+  - AWS_REGION
+- for Dockerhub login:
+  - DOCKER_ID
+  - DOCKER_PASSWORD
+- Postgres DB credentials
+  - POSTGRES_USER
+  - POSTGRES_PASSWORD
+
+This **Variation 2** of CI/CD pipeline uses GitHub Actions to create a new version of AWS Elastic Beanstalk Multi-Docker Environment and subsiquently deploy it. 
+
+[This is the source code of Variation 2](https://github.com/kkkooosss/React-app-for-multi-docker-CI-CD-deployment-to-ecs).
+
+[The **Variation 2** via AWS CLI created on Bitbacket-pipeline ](https://bitbucket.org/ConstConst/react-app-for-multi-docker-ci-cd-deployment-to/src/master/).
+
+[*The **Variation 2** based on Travis-CI could be found here (original code by Stephen Grider)](https://github.com/kkkooosss/React-app-for-multi-docker-CI-CD-deployment-to-elasticbeanstalk-aws-with-travis).
