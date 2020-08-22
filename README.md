@@ -26,7 +26,7 @@ Aforementioned React App utilazes external RDS Postgres and ElastiCash for Redis
 
 _*Please note that you could be charged for usage of those services._
 
-Following **secrets** should be added to GitHub repository settings:
+Following **secrets** should exist in GitHub repository settings:
 - for AWS configure
   - ACCESS_KEY_ID
   - SECRET_ACCESS_KEY
@@ -52,7 +52,7 @@ _Note! Test, Build & Push phases were removed from this version of the pipeline.
 
 _*Please note that you could be charged for usage of those services._
 
-Following **secrets** should be added to GitHub repository settings:
+Following **secrets** should exist in to GitHub repository settings:
 - for AWS configure
   - ACCESS_KEY_ID
   - SECRET_ACCESS_KEY
