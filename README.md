@@ -20,13 +20,13 @@ Aforementioned React App utilazes external RDS Postgres and ElastiCash for Redis
 **Prerequisites** 
 
 - User whith programmatic access to AWS.
-- Existing AWS ECS Cluster with corresponding service and initialed task-definition.
-- Running AWS RDS Postgres inastance.
+- Existing AWS ECS Cluster with corresponding service and initiated task-definition.
+- Running AWS RDS Postgres instance.
 - Running AWS ElastiCash for Redis.
 
 _*Please note that you could be charged for usage of those services._
 
-Also, following **secrets** should be added to GitHub repositorie settings:
+Following **secrets** should be added to GitHub repository settings:
 - for AWS configure
   - ACCESS_KEY_ID
   - SECRET_ACCESS_KEY
@@ -35,7 +35,7 @@ Also, following **secrets** should be added to GitHub repositorie settings:
   - DOCKER_ID
   - DOCKER_PASSWORD
 
-This CI/CD pipeline uses GitHub Actions to create a new revision of the task-definition and subsiquently updates a corresponding service inside ECS cluster via AWS CLI.
+This CI/CD pipeline uses GitHub Actions to create a new revision of the task-definition and subsiquently update a corresponding service inside ECS cluster via AWS CLI.
 
 _Note! Test, Build & Push phases were removed from this version of the pipeline. Look at them in **Variation 2**._ 
 
@@ -47,12 +47,12 @@ _Note! Test, Build & Push phases were removed from this version of the pipeline.
 - Elastic Beanstalk with created Application and Environment for Multi container Docker App.
 - S3 for keeping zip files for Elastic Beanstalk.
 - Dockerhub account for images.
-- Running AWS RDS Postgres inastance.
+- Running AWS RDS Postgres instance.
 - Running AWS ElastiCash for Redis.
 
 _*Please note that you could be charged for usage of those services._
 
-Also, following **secrets** should be added to GitHub repositorie settings:
+Following **secrets** should be added to GitHub repository settings:
 - for AWS configure
   - ACCESS_KEY_ID
   - SECRET_ACCESS_KEY
@@ -60,11 +60,11 @@ Also, following **secrets** should be added to GitHub repositorie settings:
 - for Dockerhub login
   - DOCKER_ID
   - DOCKER_PASSWORD
-- Postgres DB credentials
+- RDS Postgres credentials
   - POSTGRES_USER
   - POSTGRES_PASSWORD
 
-This **Variation 2** of CI/CD pipeline uses GitHub Actions to create a new version of AWS Elastic Beanstalk Multi-Docker Environment and subsiquently deploy it. 
+This **Variation 2** of CI/CD pipeline uses GitHub Actions to create a new version of AWS Elastic Beanstalk Multi-Docker Environment and subsiquent deploy. 
 
 [This is the source code of Variation 2](https://github.com/kkkooosss/React-app-for-multi-docker-CI-CD-deployment-to-ecs).
 
