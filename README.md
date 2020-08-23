@@ -165,9 +165,9 @@ Create a new ECS cluster with the following parameters.
 
 After creating cluster go to Console of EC2. Find EC2 instances in cluster **multi-docker** (named "ECS Instance-EC2ContainerService-multi-docker") and attache second Security group (http-sg) to it.
 
-_Note! We should have tow Security groups attached to EC2 inside our cluster.
+_Note! We should have tow Security groups attached to EC2 inside our cluster._
 
-Open Target group tab and add both EC2 instances to target group "elb-tg"._
+Open Target group tab and add both EC2 instances to target group "elb-tg".
 ___
 Go back to ECS Consol. 
 **Create a new Task-Definition** with the following parameters.
@@ -180,7 +180,9 @@ Go back to ECS Consol.
 
 Scroll down to the end and push "Configure via JSON"
 Copy/paste content od task-definition.json file from this repository.
-Say "Save" and "Create"
+
+Say "Save" and "Create".
+
 You have to see a new revision of "multi-docker-task-definition" with four containers.
 ___
 **Create a service.**
@@ -194,16 +196,17 @@ Create service with the following parameters.
 - Number of tasks       : 1 (you can choose more, depend on EC2 type you choose)
 - others by default
 
-Say "Next step"
-Select our Application Load Balancer "elb-multi-docker"
+- Say "Next step"
+- Select our Application Load Balancer "elb-multi-docker"
 
-- Container name    : port 80:HTTP  Say "Add to load balancer"
-- Target group name : elb-tg
+  - Container name    : port 80:HTTP  Say "Add to load balancer"
+  - Target group name : elb-tg
 
 - Say "Next step"
-You cand adjust "Set Auto Scaling policy" or keep it by default (NOT adjusted)
-- Check the Review
-__Note! Please double check that you keep 
+- You cand adjust "Set Auto Scaling policy" or keep it by default (NOT adjusted)
+- Check the Review.
+
+ _Note! Please double check that you keep 
 Minimum healthy percent : 100
 Maximum percent         : 200
 It will let us dropdown-zero update of our application_
@@ -211,7 +214,7 @@ It will let us dropdown-zero update of our application_
 ___
 You should see the PENDING status of our task. It's Okay.
 
-The final step you have to add your credentials to Secrets in the "Setting" tab in your GitHub repository.
+The final step - you have to add your credentials to Secrets in the "Setting" tab in your GitHub repository.
 ___
 **Total 9 secrets.**
 
@@ -228,16 +231,17 @@ RDS Postgres and Redis Endpoints&credentials
 - PGDATABASE
 
 for ECR login
-- ECR_PREF ( Prefox from "View push commands" button  looks like this "*your_account*.dkr.ecr.eu-central-1.amazonaws.com")
+- ECR_PREF ( URL of your ECR  "your_account.dkr.ecr.eu-central-1.amazonaws.com". You can find it to select  "View push commands" in your ECR.)
 ___
 Now you can use the pipeline which will be update React App after each push action to master branch.
 
-First of all update ARN name of "executionRoleArn" in the **task-definition.json** file.
-
 GitHub Actions will start the pipeline after your commitment. It takes a few minutes. You should see the RUNNING status of task and all containers inside of it.
 Now your pipeline is ready and working.
+
 **Congratulations!!!**
 ___
+Check it.
+
 As an example, edit file "React-app-for-multi-docker-elb-ecs-service-capacity_provider/client/src/App.js"
 
 Change "This is a Fibonacci Calculator" to "Fantastic Fibonacci Calculator"
@@ -263,4 +267,4 @@ Double-check that you remove:
 - ECR "multi-docker" with all images.
 
 
-Thank you.
+Good luck!
