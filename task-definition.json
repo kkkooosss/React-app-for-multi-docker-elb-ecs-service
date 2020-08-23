@@ -1,6 +1,6 @@
 {
   "family": "multi-docker-task-definition",
-  "executionRoleArn": "arn:aws:iam::092663235681:role/ecs-devops-sandbox-execution-role",
+  "executionRoleArn": "EXEC_ROLE_ARN",
   "networkMode": "bridge",
   "placementConstraints": [],
   "requiresCompatibilities": [
@@ -25,15 +25,15 @@
       "environment": [
         {
           "name": "PGDATABASE",
-          "value": "multi-docker"
+          "value": "PGDATABASE"
         },
         {
           "name": "PGHOST",
-          "value": "multi-docker.crrqphzb15jt.eu-central-1.rds.amazonaws.com"
+          "value": "POSTGRESS_HOST"
         },
         {
           "name": "PGPASSWORD",
-          "value": "hardsuperpass-word"
+          "value": "POSTGRES_PASSWORD"
         },
         {
           "name": "PGPORT",
@@ -41,11 +41,11 @@
         },
         {
           "name": "PGUSER",
-          "value": "postgres"
+          "value": "POSTGRES_USER"
         },
         {
           "name": "REDIS_HOST",
-          "value": "multi-docker-redis.jvhclb.ng.0001.euc1.cache.amazonaws.com"
+          "value": "REDIS_HOST"
         },
         {
           "name": "REDIS_PORT",
@@ -63,7 +63,7 @@
       "environment": [
         {
           "name": "REDIS_HOST",
-          "value": "multi-docker-redis.jvhclb.ng.0001.euc1.cache.amazonaws.com"
+          "value": "REDIS_HOST"
         },
         {
           "name": "REDIS_PORT",
