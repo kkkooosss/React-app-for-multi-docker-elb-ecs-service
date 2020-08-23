@@ -33,15 +33,15 @@ jobs:
         run: aws ecr get-login-password --region eu-central-1 | docker login --username AWS --password-stdin ${{ secrets.ECR_PREF }}
       - name: Push images to ECR 
         run: | 
-           docker tag multi-client:latest ${{ secrets.ECR_PREF }}/multi-client:latest
-           docker tag multi-nginx:latest  ${{ secrets.ECR_PREF }}/multi-nginx:latest
-           docker tag multi-server:latest ${{ secrets.ECR_PREF }}/multi-server:latest
-           docker tag multi-worker:latest ${{ secrets.ECR_PREF }}/multi-worker:latest          
-           docker push ${{ secrets.ECR_PREF }}/multi-client:latest
-           docker push ${{ secrets.ECR_PREF }}/multi-server:latest
-           docker push ${{ secrets.ECR_PREF }}/multi-nginx:latest
-           docker push ${{ secrets.ECR_PREF }}/multi-worker:latest    
-        
+           docker tag multi-client ${{ secrets.ECR_PREF }}/multi-client
+           docker tag multi-nginx  ${{ secrets.ECR_PREF }}/multi-nginx
+           docker tag multi-server ${{ secrets.ECR_PREF }}/multi-server
+           docker tag multi-worker ${{ secrets.ECR_PREF }}/multi-worker          
+           docker push ${{ secrets.ECR_PREF }}/multi-client
+           docker push ${{ secrets.ECR_PREF }}/multi-server
+           docker push ${{ secrets.ECR_PREF }}/multi-nginx
+           docker push ${{ secrets.ECR_PREF }}/multi-worker
+                 
   deployment:
     name: Deploy New version of App to ECS 
     runs-on: ubuntu-latest
