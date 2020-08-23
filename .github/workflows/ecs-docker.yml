@@ -23,10 +23,10 @@ jobs:
           
       - name: update image URL
         run: |
-          sed -i "s/multi-client/${{ secrets.ECR_PREF }}/multi-client/g" task-definition.json
-          sed -i "s/multi-server/${{ secrets.ECR_PREF }}/multi-server/g" task-definition.json
-          sed -i "s/multi-nginx/${{ secrets.ECR_PREF }}/multi-nginx/g" task-definition.json
-          sed -i "s/multi-worker/${{ secrets.ECR_PREF }}/multi-worker/g" task-definition.json
+          sed -i "s/ECR/${{ secrets.ECR_PREF }}/g" task-definition.json
+          sed -i "s/ECR/${{ secrets.ECR_PREF }}/g" task-definition.json
+          sed -i "s/ECR/${{ secrets.ECR_PREF }}/g" task-definition.json
+          sed -i "s/ECR/${{ secrets.ECR_PREF }}/g" task-definition.json
           
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
