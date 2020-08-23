@@ -1,6 +1,8 @@
 {
   "family": "multi-docker-task-definition",
-  "executionRoleArn": "X_ROLE_ARN",
+  "executionRoleArn": [
+       "X_ROLE_ARN"
+    ],
   "networkMode": "bridge",
   "placementConstraints": [],
   "requiresCompatibilities": [
