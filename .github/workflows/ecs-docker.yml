@@ -33,14 +33,14 @@ jobs:
         run: aws ecr get-login-password --region eu-central-1 | docker login --username AWS --password-stdin ${{ secret.ECR_PREF }}
       - name: Push images to ECR 
         run: | 
-           docker tag multi-client:latest ${{ secret.ECR_PREF }}/multi-client:latest
-           docker tag multi-nginx:latest  ${{ secret.ECR_PREF }}/multi-nginx:latest
-           docker tag multi-server:latest ${{ secret.ECR_PREF }}/multi-server:latest
-           docker tag multi-worker:latest ${{ secret.ECR_PREF }}/multi-worker:latest          
-           docker push ${{ secret.ECR_PREF }}/multi-client:latest
-           docker push ${{ secret.ECR_PREF }}/multi-server:latest
-           docker push ${{ secret.ECR_PREF }}/multi-nginx:latest
-           docker push ${{ secret.ECR_PREF }}/multi-worker:latest    
+           docker tag multi-client:latest ${{ secrets.ECR_PREF }}/multi-client:latest
+           docker tag multi-nginx:latest  ${{ secrets.ECR_PREF }}/multi-nginx:latest
+           docker tag multi-server:latest ${{ secrets.ECR_PREF }}/multi-server:latest
+           docker tag multi-worker:latest ${{ secrets.ECR_PREF }}/multi-worker:latest          
+           docker push ${{ secrets.ECR_PREF }}/multi-client:latest
+           docker push ${{ secrets.ECR_PREF }}/multi-server:latest
+           docker push ${{ secrets.ECR_PREF }}/multi-nginx:latest
+           docker push ${{ secrets.ECR_PREF }}/multi-worker:latest    
       
       - name: update DB Credentials&Endpoints
         run: |
