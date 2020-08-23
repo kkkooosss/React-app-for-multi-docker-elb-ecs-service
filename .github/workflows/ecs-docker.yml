@@ -52,5 +52,5 @@ jobs:
           cat task-definition.json
       - name: Create ZIP packege from REPO
         run : |
-          zip -r React_App ./ -x *.git*
-          aws s3 cp React_App  s3://elasticbeanstalk-eu-central-1-092663235681/multi-docker/ 
+          zip -r React_App.zip ./ -x *.git*
+          aws s3 cp React_App.zip  s3://elasticbeanstalk-eu-central-1-092663235681/multi-docker/ 
