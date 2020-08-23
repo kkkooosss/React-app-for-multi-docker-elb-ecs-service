@@ -25,7 +25,7 @@
       "environment": [
         {
           "name": "PGDATABASE",
-          "value": "DATABASE"
+          "value": "POSTGRES_DB"
         },
         {
           "name": "PGHOST",
