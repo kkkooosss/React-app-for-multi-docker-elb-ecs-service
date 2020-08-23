@@ -1,1 +1,56 @@
+on:
+  push:
+    branches:
+      - master
 
+name: Apdate multi images docker React App and deploy it to Amazon ECS 
+jobs:
+  build_test_push:    
+    name: Test&build and push new images to Dockerhub
+    runs-on: ubuntu-latest
+    steps:
+      - name: Git clone our REPO
+        uses: actions/checkout@v2
+      #- name: Test phase 
+        #run: |
+           #docker build -t kosdockerid/react-test -f ./client/Dockerfile.dev ./client
+           #docker run kosdockerid/react-test npm test -- --coverage
+      - name: Build phase  
+        run: |    
+           docker build -t multi-client ./client
+           docker build -t multi-nginx ./nginx
+           docker build -t multi-server ./server
+           docker build -t multi-worker ./worker
+      
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.SECRET_ACCESS_KEY }}
+          aws-region: ${{ secrets.AWS_REGION }}
+
+      - name: Login to ECR 
+        run: aws ecr get-login-password --region eu-central-1 | docker login --username AWS --password-stdin ${{ secret.ECR_PREF }}
+      - name: Push images to ECR 
+        run: | 
+           docker tag multi-client:latest ${{ secret.ECR_PREF }}/multi-client:latest
+           docker tag multi-nginx:latest  ${{ secret.ECR_PREF }}/multi-nginx:latest
+           docker tag multi-server:latest ${{ secret.ECR_PREF }}/multi-server:latest
+           docker tag multi-worker:latest ${{ secret.ECR_PREF }}/multi-worker:latest          
+           docker push ${{ secret.ECR_PREF }}/multi-client:latest
+           docker push ${{ secret.ECR_PREF }}/multi-server:latest
+           docker push ${{ secret.ECR_PREF }}/multi-nginx:latest
+           docker push ${{ secret.ECR_PREF }}/multi-worker:latest    
+      
+      - name: update DB Credentials&Endpoints
+        run: |
+          sed -i "s/POSTGRES_USER/${{ secrets.POSTGRES_USER }}/g" task-definition.json
+          sed -i "s/POSTGRES_PASSWORD/${{ secrets.POSTGRES_PASSWORD }}/g" task-definition.json
+          sed -i "s/POSTGRESS_HOST/${{ secrets.POSTGRESS_HOST }}/g" task-definition.json
+          sed -i "s/REDIS_HOST/${{ secrets.REDIS_HOST }}/g" task-definition.json
+          sed -i "s/PGDATABASE/${{ secrets.PGDATABASE }}/g" task-definition.json
+          cat task-definition.json
+      - name: Create ZIP packege from REPO
+        run : |
+          zip -r React_App ./ -x *.git*
+          aws s3 cp React_App  s3://elasticbeanstalk-eu-central-1-092663235681/multi-docker/ 
