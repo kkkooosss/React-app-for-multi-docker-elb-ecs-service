@@ -23,5 +23,5 @@ jobs:
           sed -i "s/POSTGRESS_HOST/${{ secrets.POSTGRESS_HOST }}/g" task-definition.json
           sed -i "s/REDIS_ENDPOINT/${{ secrets.REDIS_ENDPOINT }}/g" task-definition.json
           sed -i "s/POSTGRES_DB/${{ secrets.POSTGRES_DB }}/g" task-definition.json
-          sed -i "s/X_ROLE_ARN/${{ secrets.X_ROLE_ARN }}/g" task-definition.json
+          sed -i "s/MY_SECRET_ARN/${{ secrets.MY_SECRET_ARN }}/g" task-definition.json
           cat task-definition.json
