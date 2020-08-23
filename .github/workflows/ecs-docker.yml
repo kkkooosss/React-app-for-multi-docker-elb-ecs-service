@@ -47,8 +47,9 @@ jobs:
           sed -i "s/POSTGRES_USER/${{ secrets.POSTGRES_USER }}/g" task-definition.json
           sed -i "s/POSTGRES_PASSWORD/${{ secrets.POSTGRES_PASSWORD }}/g" task-definition.json
           sed -i "s/POSTGRESS_HOST/${{ secrets.POSTGRESS_HOST }}/g" task-definition.json
-          sed -i "s/REDIS_HOST/${{ secrets.REDIS_HOST }}/g" task-definition.json
+          sed -i "s/REDIS_HOST/${{ secrets.REDIS_ENDPOINT }}/g" task-definition.json
           sed -i "s/PGDATABASE/${{ secrets.PGDATABASE }}/g" task-definition.json
+          sed -i "s/EXEC_ROLE_ARN/${{ secrets.EXEC_ROLE_ARN }}/g" task-definition.json
           cat task-definition.json
       - name: Create ZIP packege from REPO
         run : |
