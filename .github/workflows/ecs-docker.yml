@@ -55,6 +55,8 @@ jobs:
     runs-on: ubuntu-latest
     needs: [build_test_push] 
     steps:
+      - name: Git clone our REPO
+        uses: actions/checkout@v2
         
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
