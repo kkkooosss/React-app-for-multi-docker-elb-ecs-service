@@ -9,7 +9,7 @@
   "containerDefinitions": [
     {
       "name": "client",
-      "image": "multi-client:00000",
+      "image": "multi-client",
       "memory": 128,
       "hostname": "client",
       "portMappings": [],
@@ -17,7 +17,7 @@
     },
     {
       "name": "server",
-      "image": "multi-server:00000",
+      "image": "multi-server",
       "memory": 128,
       "hostname": "api",
       "portMappings": [],
@@ -55,7 +55,7 @@
     },
     {
       "name": "worker",
-      "image": "multi-worker:00000",
+      "image": "multi-worker",
       "memory": 128,
       "hostname": "worker",
       "portMappings": [],
@@ -73,7 +73,7 @@
     },
     {
       "name": "nginx",
-      "image": "multi-nginx:00000",
+      "image": "multi-nginx",
       "memory": 128,
       "hostname": "nginx",
       "essential": true, 
