@@ -1,6 +1,6 @@
 {
   "family": "multi-docker-task-definition",
-  "executionRoleArn": "arn:aws:iam::092663235681:role/ecs-devops-sandbox-execution-role",
+  "executionRoleArn": "arn:aws:iam::*************************",
   "networkMode": "bridge",
   "placementConstraints": [],
   "requiresCompatibilities": [
