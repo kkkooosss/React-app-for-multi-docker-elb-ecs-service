@@ -24,4 +24,9 @@ jobs:
           sed -i "s/REDIS_ENDPOINT/${{ secrets.REDIS_ENDPOINT }}/g" task-definition.json
           sed -i "s/POSTGRES_DB/${{ secrets.POSTGRES_DB }}/g" task-definition.json
           sed -i "s/MY_SECRET_ARN/${{ secrets.MY_SECRET_ARN }}/g" task-definition.json
-          cat task-definition.json
+          cat task-definition.json     
+          
+      - name: Create ZIP packege from REPO
+        run : |
+          zip -r React_App1.zip ./ -x *.git*
+          aws s3 cp React_App1.zip  s3://elasticbeanstalk-eu-central-1-092663235681/multi-docker/ 
