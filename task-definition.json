@@ -1,6 +1,6 @@
 {
   "family": "multi-docker-task-definition",
-  "executionRoleArn": "MY_SECRET_ARN",
+  "executionRoleArn": "arn:aws:iam::092663235681:role/ecs-devops-sandbox-execution-role",
   "networkMode": "bridge",
   "placementConstraints": [],
   "requiresCompatibilities": [
@@ -9,7 +9,7 @@
   "containerDefinitions": [
     {
       "name": "client",
-      "image": "kosdockerid/multi-client",
+      "image": "multi-client:00000",
       "memory": 128,
       "hostname": "client",
       "portMappings": [],
@@ -17,7 +17,7 @@
     },
     {
       "name": "server",
-      "image": "kosdockerid/multi-server",
+      "image": "multi-server:00000",
       "memory": 128,
       "hostname": "api",
       "portMappings": [],
@@ -55,7 +55,7 @@
     },
     {
       "name": "worker",
-      "image": "kosdockerid/multi-worker",
+      "image": "multi-worker:00000",
       "memory": 128,
       "hostname": "worker",
       "portMappings": [],
@@ -73,7 +73,7 @@
     },
     {
       "name": "nginx",
-      "image": "kosdockerid/multi-nginx",
+      "image": "multi-nginx:00000",
       "memory": 128,
       "hostname": "nginx",
       "essential": true, 
