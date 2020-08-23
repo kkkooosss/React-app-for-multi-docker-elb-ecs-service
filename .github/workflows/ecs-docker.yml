@@ -22,5 +22,5 @@ jobs:
           sed -i "s/POSTGRES_PASSWORD/${{ secrets.POSTGRES_PASSWORD }}/g" task-definition.json
           sed -i "s/POSTGRESS_HOST/${{ secrets.POSTGRESS_HOST }}/g" task-definition.json
           sed -i "s/REDIS_ENDPOINT/${{ secrets.REDIS_ENDPOINT }}/g" task-definition.json
-          sed -i "s/PGDATABASE/${{ secrets.PGDATABASE }}/g" task-definition.json
+          sed -i "s/DATABASE/${{ secrets.DATABASE }}/g" task-definition.json
           cat task-definition.json
