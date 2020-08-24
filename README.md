@@ -35,9 +35,10 @@ Following **secrets** should exist in GitHub repository settings:
   - DOCKER_ID
   - DOCKER_PASSWORD
 
-This CI/CD pipeline uses GitHub Actions to create a new revision of the task-definition and subsiquently update a corresponding service inside ECS cluster via AWS CLI.
+This CI/CD pipeline uses GitHub Actions to do tow jobs.
+- Test, build, and update docker images of React App Fibonacci calculator, and push them to ECR. 
+- Create a new revision of the task-definition and subsequently update a corresponding service inside ECS cluster via AWS CLI.
 
-_Note! Test, Build & Push phases were removed from this version of the pipeline. Look at them in **Variation 2**._ 
 
 ## Variation 2
 
