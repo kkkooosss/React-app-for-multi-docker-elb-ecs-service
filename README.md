@@ -180,7 +180,7 @@ Go back to ECS Consol.
 
 
 Scroll down to the end and push "Configure via JSON"
-Copy/paste content od task-definition.json file from this repository.
+Copy/paste content of task-definition.json file from this repository.
 
 Say "Save" and "Create".
 
@@ -257,7 +257,7 @@ See the result by updating the browser.
 _Note! The processes take a while time to finish. And we have to reload the page in the browser each time we put in the index to the calculator. Don't ask me why..._
 ___
 ATTENTION!!! Remove ALL created resources after the finish. Otherwise, you could be charged for them.
-Double-check that you remove:
+Double-check that you removed:
 
 - Cluster "multi-docker" 
 - RDS Postgres DB instance
