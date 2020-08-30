@@ -73,5 +73,5 @@ jobs:
           aws-region: ${{ secrets.AWS_REGION }}
       - name: render-task-definition and update service
         run: |
-          aws ecs register-task-definition --family multi-docker-task-definition --cli-input-json file://task-definition.json
+          aws ecs register-task-definition --family multi-docker-task-definition --execution-role-arn ${{ secrets.TASK_EXEC_ROLE }} --cli-input-json file://task-definition.json
           aws ecs update-service --cluster multi-docker --service multi-docker-service --task-definition multi-docker-task-definition --force-new-deployment
