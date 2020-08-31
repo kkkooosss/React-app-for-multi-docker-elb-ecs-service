@@ -104,8 +104,7 @@ ___
 **Create execution role** "sandbox-exec-role"
 - Permissions policy: AmazonECSTaskExecutionRolePolicy 
 
-Update ARN of "executionRoleArn" in the task-definition.json file with your new "sandbox-exec-role" Role ARN. GitHub Action will start the pipeline after your commitment. Deployment job will stop with ERROR as we have no environment yet.
-It's Okay.
+Create a secret "TASK_EXEC_ROLE" in the Secrets of Settings with value as your new "sandbox-exec-role" Role ARN.
 ___
 **Create Application Load Balancer**  "elb-multi-docker" with internet-facing.
 ___
