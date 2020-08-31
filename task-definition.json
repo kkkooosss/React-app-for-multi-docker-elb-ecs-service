@@ -1,6 +1,5 @@
 {
   "family": "multi-docker-task-definition",
-  "executionRoleArn": "arn:aws:iam::****************:role/ecsTaskExecutionRole",
   "networkMode": "bridge",
   "placementConstraints": [],
   "requiresCompatibilities": [
