@@ -233,7 +233,7 @@ RDS Postgres and Redis Endpoints&credentials
 for ECR login
 - ECR_PREF ( URL of your ECR  "your_account.dkr.ecr.eu-central-1.amazonaws.com". You can find it to select  "View push commands" in your ECR.)
 for ECS task-definition
-- TASK_EXEC_ROLE (You can find it in the Consol, or wiyh aws-cli command
+- TASK_EXEC_ROLE (You can find it in the Consol, or with aws-cli command
 "aws iam list-roles --query Roles[].Arn | grep Execution")
 ___
 Now you can use the pipeline which will be update React App after each push action to master branch.
