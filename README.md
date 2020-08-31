@@ -79,6 +79,11 @@ ___
 
 _Note! All resources should be created in the same VPC !_
 ___
+For automatic creation of the Environment use 
+[Terraform creation](https://github.com/kkkooosss/Terraform-creation_environment_for_React_app).
+___
+## Manual creation
+___
 **Create Security group**
 - "db-redis-sg".
 - Inbound  :  6379 (Redis) , 5432
